@@ -1,0 +1,17 @@
+{
+    "name" : "swann/framework",
+    "autoload": {
+        "psr-4": {
+            "Learnspace\\PhpFlashFramework\\": "src/",
+            "App\\": "app/"
+        }
+    },
+    "authors" : [
+        {
+            "name": "Stigin Starview"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^2.0"
+    }
+}
