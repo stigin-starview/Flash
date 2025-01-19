@@ -3,7 +3,7 @@
         'name' => 'stigin.starview/flash',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '9ed04b7e30e2ab7e8d22f61f802b99aadf31f052',
+        'reference' => 'd44a794e871fd43ac25d0d0865ddae4a9448b527',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -247,7 +247,7 @@
         'stigin.starview/flash' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '9ed04b7e30e2ab7e8d22f61f802b99aadf31f052',
+            'reference' => 'd44a794e871fd43ac25d0d0865ddae4a9448b527',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

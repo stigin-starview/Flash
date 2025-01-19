@@ -1,0 +1,134 @@
+#!/usr/bin/env php
+<?php
+
+// This is a basic installation script for your framework
+
+// Helper function for colored text
+function colored($text, $colorCode) {
+    return "\033[" . $colorCode . "m" . $text . "\033[0m";
+}
+
+echo "\033[34m"; // Set text color to blue
+echo "
+     _____                    _____            _____                    _____                    _____          
+         /\    \                  /\    \          /\    \                  /\    \                  /\    \         
+        /::\    \                /::\____\        /::\    \                /::\    \                /::\____\        
+       /::::\    \              /:::/    /       /::::\    \              /::::\    \              /:::/    /        
+      /::::::\    \            /:::/    /       /::::::\    \            /::::::\    \            /:::/    /         
+     /:::/\:::\    \          /:::/    /       /:::/\:::\    \          /:::/\:::\    \          /:::/    /          
+    /:::/__\:::\    \        /:::/    /       /:::/__\:::\    \        /:::/__\:::\    \        /:::/____/           
+   /::::\   \:::\    \      /:::/    /       /::::\   \:::\    \       \:::\   \:::\    \      /::::\    \           
+  /::::::\   \:::\    \    /:::/    /       /::::::\   \:::\    \    ___\:::\   \:::\    \    /::::::\    \   _____  
+ /:::/\:::\   \:::\    \  /:::/    /       /:::/\:::\   \:::\    \  /\   \:::\   \:::\    \  /:::/\:::\    \ /\    \ 
+/:::/  \:::\   \:::\____\/:::/____/       /:::/  \:::\   \:::\____\/::\   \:::\   \:::\____\/:::/  \:::\    /::\____\
+\::/    \:::\   \::/    /\:::\    \       \::/    \:::\  /:::/    /\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /
+ \/____/ \:::\   \/____/  \:::\    \       \/____/ \:::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    / 
+          \:::\    \       \:::\    \               \::::::/    /    \:::\   \:::\    \               \::::::/    /  
+           \:::\____\       \:::\    \               \::::/    /      \:::\   \:::\____\               \::::/    /   
+            \::/    /        \:::\    \              /:::/    /        \:::\  /:::/    /               /:::/    /    
+             \/____/          \:::\    \            /:::/    /          \:::\/:::/    /               /:::/    /     
+                               \:::\    \          /:::/    /            \::::::/    /               /:::/    /      
+                                \:::\____\        /:::/    /              \::::/    /               /:::/    /       
+                                 \::/    /        \::/    /                \::/    /                \::/    /        
+                                  \/____/          \/____/                  \/____/                  \/____/         
+                                                                                                                     ";
+echo "\033[0m"; // Reset text color
+
+
+// Add a 1-second delay
+sleep(1);
+
+// Continue with other installation messages
+echo colored("\nStarting framework installation...\n", 35);
+sleep(1); // Another delay to simulate a loading effect
+
+// Simulate a loading animation for extra flair
+echo  colored("Loading", 65);
+for ($i = 0; $i < 3; $i++) {
+    echo ".";
+    sleep(1); // Add a small delay between dots
+}
+echo "\n";
+// Ensure the framework is being run from the root of the project
+$rootDir = dirname(__DIR__);
+if (!is_dir($rootDir . '/src')) {
+    echo colored("Error: This script must be run from the root of the project.\n", "31");
+    exit(1);
+}
+
+// Step 1: Check for Config and System folders, and exit if missing
+$criticalDirs = [
+    '/Config' => 'Config',
+    '/System' => 'System',
+];
+
+foreach ($criticalDirs as $dir => $folderName) {
+    $fullPath = $rootDir . $dir;
+    if (!is_dir($fullPath)) {
+        echo colored("❌ Error: $folderName folder is missing: $dir. Please clone it from the Flash repository.\n", "31");
+        exit(1);
+    }
+}
+echo colored("✅ Config and System folders are present. Proceeding with installation...\n", "32");
+
+// Step 2: Install Composer dependencies
+echo colored("🔄 Installing dependencies with Composer...\n", "34");
+exec('composer install', $output, $returnVar);
+if ($returnVar !== 0) {
+    echo colored("❌ Error: Failed to install dependencies.\n", "31");
+    exit(1);
+}
+echo colored("✅ Dependencies installed successfully.\n", "32");
+
+// Step 3: Set up environment file (creating .env if not exists)
+$envFile = $rootDir . '/.env';
+if (!file_exists($envFile)) {
+    echo "Creating .env file...\n";
+    copy($rootDir . '/.env.example', $envFile);
+    echo ".env file created. Please configure your environment variables.\n";
+} else {
+    echo ".env file already exists.\n";
+}
+
+echo colored("📂 Checking and creating required directories...\n", "34");
+// Step 4: Check for required directories and create them if missing, along with dummy files
+$requiredDirsAndDummyFiles = [
+    '/src/Controller' => '/src/Controller/ExampleController.php',
+    '/src/View' => '/src/View/exampleView.php',
+    '/src/Model' => '/src/Model/ExampleModel.php',
+    '/public' => null,
+    '/public/assets/css' => '/public/assets/css/styles.css',
+    '/public/assets/js' => '/public/assets/js/script.js',
+    '/public/assets/images' => null,
+];
+
+foreach ($requiredDirsAndDummyFiles as $dir => $dummyFile) {
+    $fullPath = $rootDir . $dir;
+    if (!is_dir($fullPath)) {
+        echo "Directory missing: $dir. Creating...\n";
+        if (!mkdir($fullPath, 0755, true) && !is_dir($fullPath)) {
+            throw new \RuntimeException(sprintf('❌Directory "%s" was not created ❌', $fullPath));
+        }
+
+        // Create dummy file if specified
+        if ($dummyFile) {
+            $dummyFilePath = $rootDir . $dummyFile;
+            $dummyContent = match ($dummyFile) {
+                '/src/Controller/ExampleController.php' => "<?php\n\n// Input your controller code here\n",
+                '/src/View/exampleView.php' => "<!-- Input your view code here -->\n",
+                '/src/Model/ExampleModel.php' => "<?php\n\n// Input your model code here\n",
+                '/public/assets/css/styles.css' => "/* Input your CSS code here */\n",
+                '/public/assets/js/script.js' => "// Input your JavaScript code here\n",
+                default => "",
+            };
+            echo colored("📂creating required directories... $dummyFile\n", "34");
+            file_put_contents($dummyFilePath, $dummyContent);
+        }
+    } else {
+        echo "Directory already exists: $dir.  - Skipping...\n";
+    }
+}
+
+
+echo colored("🎉 Installation complete! 🚀 You can now start developing with FLASH.\n", "32");
+echo colored("💡 Don't forget to configure your environment variables in .env!\n", "33");

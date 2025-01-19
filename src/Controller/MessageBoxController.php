@@ -47,7 +47,7 @@ class MessageBoxController implements ViewControllerInterface
         // Fetch all messages
         $messages = $this->repository->getAllMessages();
 
-        // Use the View helper to render the view
+        // Use the View helper to render the View
         return new ViewService('messageBoxView', [
             'messages_box' => $messages,
             'errors' => $errors,

@@ -13,10 +13,10 @@ class DatabaseConnection
 
     private function __construct()
     {
-//        $config = require __DIR__ . '/../../config/database.php';
-//        $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
+//        $Config = require __DIR__ . '/../../Config/database.php';
+//        $dsn = "mysql:host={$Config['host']};port={$Config['port']};dbname={$Config['dbname']};charset={$Config['charset']}";
 //        try {
-//            $this->pdo = new PDO($dsn, $config['username'], $config['password']);
+//            $this->pdo = new PDO($dsn, $Config['username'], $Config['password']);
 //            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 //        } catch (PDOException $e) {
 //            die('Database connection failed: ' . $e->getMessage());
