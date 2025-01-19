@@ -1,17 +1,22 @@
 {
-    "name" : "swann/framework",
+    "name": "stigin.starview/flash",
+    "type": "project",
     "autoload": {
         "psr-4": {
-            "Learnspace\\PhpFlashFramework\\": "src/",
-            "App\\": "app/"
+            "learnspace\\flash\\": "src/",
+            "learnspace\\flash\\System\\": "System/"
         }
     },
-    "authors" : [
+    "authors": [
         {
-            "name": "Stigin Starview"
+            "name": "Ehsan Razmkhah, stigin Starview",
+            "email": "stigin.starview@check24.de"
         }
     ],
     "require": {
-        "monolog/monolog": "^2.0"
+      "ext-pdo": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
     }
 }
