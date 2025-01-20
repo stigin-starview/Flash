@@ -21,7 +21,7 @@ try {
 }
 
 // Routers
-$routes = include __DIR__ . "/../Config/Routes.php";
+$routes = include __DIR__ . "/../config/Routes.php";
 $matches = [];
 $foundedController = null;
 foreach ($routes as $regex => $controller) {
@@ -38,7 +38,7 @@ if (!$foundedController) {
 }
 
 // Service manager
-$dependencies = include __DIR__ . "/../Config/dependencies.php";
+$dependencies = include __DIR__ . "/../config/dependencies.php";
 $serviceManager = new ServiceManager($dependencies);
 $controllerObject = $serviceManager->instantiate($foundedController);
 

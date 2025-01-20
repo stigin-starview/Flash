@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 /**
+ * Middleware for database communication
  * This class will make database communication in ORM style (objects)
  */
 namespace learnspace\flash\System;
@@ -68,6 +69,7 @@ class DatabaseModel
         return $stmt->execute([$this->attributes['id']]);
     }
 
+    // Magic functions
     public function __get($key)
     {
         return $this->attributes[$key] ?? null;

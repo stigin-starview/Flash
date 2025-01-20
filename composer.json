@@ -4,7 +4,7 @@
     "autoload": {
         "psr-4": {
             "learnspace\\flash\\": "src/",
-            "learnspace\\flash\\System\\": "System/"
+            "learnspace\\flash\\System\\": "system/"
         }
     },
     "authors": [

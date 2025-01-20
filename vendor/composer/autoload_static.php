@@ -30,7 +30,7 @@ class ComposerStaticInita951ac0cf7c18beeeb6e8908ba3e06fd
     public static $prefixDirsPsr4 = array (
         'learnspace\\flash\\System\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/System',
+            0 => __DIR__ . '/../..' . '/system',
         ),
         'learnspace\\flash\\' => 
         array (

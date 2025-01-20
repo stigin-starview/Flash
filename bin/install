@@ -8,34 +8,27 @@ function colored($text, $colorCode) {
     return "\033[" . $colorCode . "m" . $text . "\033[0m";
 }
 
-echo "\033[34m"; // Set text color to blue
-echo "
-     _____                    _____            _____                    _____                    _____          
-         /\    \                  /\    \          /\    \                  /\    \                  /\    \         
-        /::\    \                /::\____\        /::\    \                /::\    \                /::\____\        
-       /::::\    \              /:::/    /       /::::\    \              /::::\    \              /:::/    /        
-      /::::::\    \            /:::/    /       /::::::\    \            /::::::\    \            /:::/    /         
-     /:::/\:::\    \          /:::/    /       /:::/\:::\    \          /:::/\:::\    \          /:::/    /          
-    /:::/__\:::\    \        /:::/    /       /:::/__\:::\    \        /:::/__\:::\    \        /:::/____/           
-   /::::\   \:::\    \      /:::/    /       /::::\   \:::\    \       \:::\   \:::\    \      /::::\    \           
-  /::::::\   \:::\    \    /:::/    /       /::::::\   \:::\    \    ___\:::\   \:::\    \    /::::::\    \   _____  
- /:::/\:::\   \:::\    \  /:::/    /       /:::/\:::\   \:::\    \  /\   \:::\   \:::\    \  /:::/\:::\    \ /\    \ 
-/:::/  \:::\   \:::\____\/:::/____/       /:::/  \:::\   \:::\____\/::\   \:::\   \:::\____\/:::/  \:::\    /::\____\
-\::/    \:::\   \::/    /\:::\    \       \::/    \:::\  /:::/    /\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /
- \/____/ \:::\   \/____/  \:::\    \       \/____/ \:::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    / 
-          \:::\    \       \:::\    \               \::::::/    /    \:::\   \:::\    \               \::::::/    /  
-           \:::\____\       \:::\    \               \::::/    /      \:::\   \:::\____\               \::::/    /   
-            \::/    /        \:::\    \              /:::/    /        \:::\  /:::/    /               /:::/    /    
-             \/____/          \:::\    \            /:::/    /          \:::\/:::/    /               /:::/    /     
-                               \:::\    \          /:::/    /            \::::::/    /               /:::/    /      
-                                \:::\____\        /:::/    /              \::::/    /               /:::/    /       
-                                 \::/    /        \::/    /                \::/    /                \::/    /        
-                                  \/____/          \/____/                  \/____/                  \/____/         
-                                                                                                                     ";
+echo "\33[34m";
+
+// Asci art for some Drama :D
+$asciiArt = "
+░▒▓████████▓▒░ ░▒▓█▓▒░         ░▒▓██████▓▒░   ░▒▓███████▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░        ░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░        ░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓██████▓▒░   ░▒▓█▓▒░        ░▒▓████████▓▒░  ░▒▓██████▓▒░  ░▒▓████████▓▒░ 
+░▒▓█▓▒░        ░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░        ░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░        ░▒▓████████▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓███████▓▒░  ░▒▓█▓▒░░▒▓█▓▒░ ";
+
+foreach (str_split($asciiArt) as $char) {
+    echo $char;
+    usleep(300);
+}
+
 echo "\033[0m"; // Reset text color
 
 
-// Add a 1-second delay
+// Add a 1-second delay - for Effect !
 sleep(1);
 
 // Continue with other installation messages
@@ -56,9 +49,9 @@ if (!is_dir($rootDir . '/src')) {
     exit(1);
 }
 
-// Step 1: Check for Config and System folders, and exit if missing
+// Step 1: Check for config and System folders, and exit if missing
 $criticalDirs = [
-    '/Config' => 'Config',
+    '/config' => 'config',
     '/System' => 'System',
 ];
 
@@ -69,10 +62,10 @@ foreach ($criticalDirs as $dir => $folderName) {
         exit(1);
     }
 }
-echo colored("✅ Config and System folders are present. Proceeding with installation...\n", "32");
+echo colored("✅ config and System folders are present. Proceeding with installation...\n", "32");
 
 // Step 2: Install Composer dependencies
-echo colored("🔄 Installing dependencies with Composer...\n", "34");
+echo colored("🔄 Installing dependencies with Composer...\n", "32");
 exec('composer install', $output, $returnVar);
 if ($returnVar !== 0) {
     echo colored("❌ Error: Failed to install dependencies.\n", "31");
