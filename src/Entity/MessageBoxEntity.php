@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 /**
- * This entity represents the table
+ * This entity represents the instance of the table and its validation.
+ * Can connect entity to repository then controller can call entity directly
+ *
  */
 namespace learnspace\flash\Entity;
 

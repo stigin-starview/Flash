@@ -2,6 +2,7 @@
 
 namespace learnspace\flash\System;
 
+//ignore
 class ImageService
 {
     public function getMe()

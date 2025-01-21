@@ -33,7 +33,7 @@ class Validation
         // Each rule should be called with validation.
         $ruleDefinitions = [
             'stringValid' => [
-                'content' => 'required|string|min:5|max:500',
+                'content' => 'required|string|min:3|max:500',
             ],
             'userRegistration' => [
                 'username' => 'required|string|min:3|max:20',
@@ -49,18 +49,13 @@ class Validation
     private function applyCondition(string $field, $value, string $condition): bool
     {
         [$rule, $parameter] = explode(':', $condition . ':');
-        switch ($rule) {
-            case 'required':
-                return !empty($value);
-            case 'string':
-                return is_string($value);
-            case 'min':
-                return strlen((string)$value) >= (int)$parameter;
-            case 'max':
-                return strlen((string)$value) <= (int)$parameter;
-            default:
-                return true;
-        }
+        return match ($rule) {
+            'required' => !empty($value),
+            'string' => is_string($value),
+            'min' => strlen((string)$value) >= (int)$parameter,
+            'max' => strlen((string)$value) <= (int)$parameter,
+            default => true,
+        };
     }
 
     private function getErrorMessage(string $field, string $condition): string

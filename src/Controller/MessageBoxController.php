@@ -5,28 +5,34 @@ declare(strict_types=1);
 namespace learnspace\flash\Controller;
 
 use learnspace\flash\Repository\MessageBoxRepository;
-use learnspace\flash\System\ViewService;
+use learnspace\flash\System\http\Request;
+use learnspace\flash\System\http\Response;
 use learnspace\flash\System\Validation;
+use learnspace\flash\System\ViewService;
 
 class MessageBoxController implements ViewControllerInterface
 {
     private MessageBoxRepository $repository;
+    private Request $request;
+    private Response $response;
 
     public function __construct(MessageBoxRepository $repository)
     {
         $this->repository = $repository;
+        $this->response = new Response();
+        $this->request = new Request();
+
     }
 
     public function index(): ViewService
     {
 
-//        $parameters = $this->params() ---- handle any parameters??
         //TODO: Create a param class to handle all params.
 
         $errors = [];
 
         // Handle form submission
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($this->request->getMethod() === 'POST') {
             $validation = new Validation();
             $data = $_POST;
 
@@ -36,7 +42,7 @@ class MessageBoxController implements ViewControllerInterface
                 $this->repository->saveMessage($data['content']);
 
                 // Redirect to avoid form resubmission
-                header("Location: " . $_SERVER['REQUEST_URI']);
+                header("Location: " . $this->request->getUri());
                 exit;
             }
 

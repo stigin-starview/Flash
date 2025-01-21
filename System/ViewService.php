@@ -13,7 +13,6 @@ class ViewService
     private string $view;
     private array $data;
 
-    // Constructor to accept the View name and data
     public function __construct(string $view, array $data = [])
     {
         $this->view = $view;
@@ -23,10 +22,10 @@ class ViewService
     // Instance method to render the View
     public function render(): string
     {
-        // Extract data to variables for use in the View
+        // Extract data to variable forr use in the View
         extract($this->data);
 
-        // Build the full path to the View
+        //path of the view
         $viewPath = __DIR__ . '/../src/View/' . $this->view . '.php';
 
         if (!file_exists($viewPath)) {
@@ -39,7 +38,7 @@ class ViewService
         // Include the View file
         include $viewPath;
 
-        // Get the buffered content as a string
+        // Get the buffered content
         return ob_get_clean();
     }
 }

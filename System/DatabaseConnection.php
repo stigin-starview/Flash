@@ -6,6 +6,7 @@ namespace learnspace\flash\System;
 
 use PDO;
 
+// Connectinng to DB
 class DatabaseConnection
 {
     private static DatabaseConnection|null $instance = null;
@@ -13,14 +14,6 @@ class DatabaseConnection
 
     private function __construct()
     {
-//        $config = require __DIR__ . '/../../config/database.php';
-//        $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
-//        try {
-//            $this->pdo = new PDO($dsn, $config['username'], $config['password']);
-//            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//        } catch (PDOException $e) {
-//            die('Database connection failed: ' . $e->getMessage());
-//        }
         // Get database connection details from environment variables
         $host = $_ENV['DB_HOST'];
         $port = $_ENV['DB_PORT'];

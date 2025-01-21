@@ -9,6 +9,12 @@ use learnspace\flash\Controller\ViewControllerInterface;
 use learnspace\flash\System\EnvLoader;
 use learnspace\flash\System\ServiceManager;
 use learnspace\flash\System\ViewService;
+use learnspace\flash\System\http\Response;
+use learnspace\flash\System\http\Request;
+
+// implement request and response classes
+$response = new Response();
+$request = new Request();
 
 // Sanitize the path
 $requestedPath = htmlspecialchars($_GET['path'] ?? 'homepage');
@@ -20,7 +26,7 @@ try {
     echo $e->getMessage();
 }
 
-// Routers
+// Loading routers
 $routes = include __DIR__ . "/../config/Routes.php";
 $matches = [];
 $foundedController = null;
@@ -32,17 +38,18 @@ foreach ($routes as $regex => $controller) {
 }
 
 if (!$foundedController) {
-    http_response_code(404);
-    echo "Controller not found";
+    $response->setStatus(404);
+    $response->setBody("Controller not found");
+    $response->send();
     die;
 }
 
-// Service manager
+// Loads dependencies through service manager
 $dependencies = include __DIR__ . "/../config/dependencies.php";
 $serviceManager = new ServiceManager($dependencies);
 $controllerObject = $serviceManager->instantiate($foundedController);
 
-// Application
+// load called interface
 if ($controllerObject instanceof BasicControllerInterface) {
     echo $controllerObject->index($matches);
     die;
@@ -52,16 +59,23 @@ if ($controllerObject instanceof ViewControllerInterface) {
     $viewService = $controllerObject->index();
 
     if ($viewService instanceof ViewService) {
-        echo $viewService->render(); // Render the View
+        try {
+            echo $viewService->render();
+        } catch (Exception $e) {
+            $response->setStatus(404);
+            $response->setBody("Error rendering view");
+            $response->send();
+        }
     } else {
-        http_response_code(500);
-        echo "Invalid ViewService returned by ViewControllerInterface.";
+        $response->setStatus(500);
+        $response->setBody("Invalid ViewService returned by ViewControllerInterface.");
+        $response->send();
     }
     die;
 }
 
-// Fallback for invalid or unknown controllers
-http_response_code(404);
-echo "Controller not found or invalid.";
+$response->setStatus(404);
+$response->setBody("Controller Error or invalid");
+$response->send();
 die;
 
