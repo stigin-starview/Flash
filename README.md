@@ -26,9 +26,9 @@ Flash is a lightweight PHP framework created for educational purposes, designed 
    ```
 2. Install dependencies:
    ```bash
-   composer install
+   ./bin/install
    ```
-   *(In future updates, an installation script `./bin/install` will be added.)*
+   
 
 3. Ensure you have PHP installed and configured. For ease of use, consider using [MAMP](https://www.mamp.info) for your server and database setup.
 
